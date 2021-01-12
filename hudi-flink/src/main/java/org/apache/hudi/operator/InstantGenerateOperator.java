@@ -22,8 +22,8 @@ import org.apache.hudi.HoodieFlinkStreamer;
 import org.apache.hudi.client.FlinkTaskContextSupplier;
 import org.apache.hudi.client.HoodieFlinkWriteClient;
 import org.apache.hudi.client.common.HoodieFlinkEngineContext;
-import org.apache.hudi.client.common.TaskContextSupplier;
 import org.apache.hudi.common.config.SerializableConfiguration;
+import org.apache.hudi.common.engine.TaskContextSupplier;
 import org.apache.hudi.common.fs.FSUtils;
 import org.apache.hudi.common.model.HoodieRecord;
 import org.apache.hudi.common.model.HoodieTableType;
@@ -196,7 +196,7 @@ public class InstantGenerateOperator extends AbstractStreamOperator<HoodieRecord
         return;
       }
     }
-    throw new InterruptedException("Last instant costs more than ten second, stop task now");
+    throw new InterruptedException(String.format("Last instant costs more than %s second, stop task now", retryTimes * retryInterval));
   }
 
 
